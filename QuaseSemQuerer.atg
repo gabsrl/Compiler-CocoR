@@ -1,4 +1,20 @@
+import java.io.*;
+
+class ChangeWords {
+    String line;
+    public ChangeWords() {
+        this.line = "vazia";
+    }
+
+    public void show() {
+        System.out.println(this.line);
+    }
+
+}
+
 COMPILER QuaseSemQuerer
+
+ChangeWords handler;
 
 CHARACTERS
     letra = 'A'..'Z' + 'a'..'z'.
@@ -11,9 +27,23 @@ TOKENS
 IGNORE '\t' + '\r'
 
 PRODUCTIONS
-    QuaseSemQuerer = Linha { Linha }.
+
+    QuaseSemQuerer                                          (. handler = new ChangeWords(); .)
+    = Linha
+        {
+            Linha 
+        }                                                   (. handler.show(); .)               
+    .
+
     Linha = InputWords "|" Sentenca "\n".
-    InputWords = palavra { "," palavra }.
+
+    InputWords
+    = palavra 
+        {
+            "," palavra
+        }
+    .
+
     Sentenca = palavra { (palavra | placeHolderWord) }.
 
 END QuaseSemQuerer.

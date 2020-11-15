@@ -1,5 +1,21 @@
 
 
+import java.io.*;
+
+class ChangeWords {
+    String line;
+    public ChangeWords() {
+        this.line = "vazia";
+    }
+
+    public void show() {
+        System.out.println(this.line);
+    }
+
+}
+
+
+
 public class Parser {
 	public static final int _EOF = 0;
 	public static final int _palavra = 1;
@@ -17,7 +33,9 @@ public class Parser {
 	public Scanner scanner;
 	public Errors errors;
 
-	
+	ChangeWords handler;
+
+
 
 	public Parser(Scanner scanner) {
 		this.scanner = scanner;
@@ -78,10 +96,12 @@ public class Parser {
 	}
 	
 	void QuaseSemQuerer() {
+		handler = new ChangeWords(); 
 		Linha();
 		while (la.kind == 1) {
 			Linha();
 		}
+		handler.show(); 
 	}
 
 	void Linha() {
