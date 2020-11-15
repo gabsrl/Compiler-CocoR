@@ -5,16 +5,22 @@ class ChangeWords {
     ArrayList<String> inputWords;
     ArrayList<String> placeHolders;
     String line;
-    String finalResult;
+    String outputString;
 
     public ChangeWords() {
         this.line = "";
+        this.outputString = "";
         this.inputWords = new ArrayList();
         this.placeHolders = new ArrayList();
     }
 
+    public void clearBuffers() {
+        this.inputWords.clear();
+        this.placeHolders.clear();
+    }
+
     public void add(String text) {
-        this.line += text;
+        this.line += text + " ";
     }
 
     public void addInputWord(String input) {
@@ -26,7 +32,10 @@ class ChangeWords {
     }
 
     public void handlePlaceHolder(String digits) {
-        this.placeHolders.add(digits);
+        int readedIndex = Integer.parseInt(digits);
+        String searchedPlaceHolder = this.inputWords.get(readedIndex-1);        
+        this.line+= searchedPlaceHolder + " ";
+        //this.placeHolders.add(digits);
     }
 
     public void showPlaceHolders() {
@@ -59,10 +68,12 @@ PRODUCTIONS
     = Linha
         {
             Linha 
-        }                                                   (. handler.showInputWords(); handler.showPlaceHolders(); .)               
+        }                                                   (. handler.show(); .)               
     .
 
-    Linha = InputWords "|" Sentenca "\n".
+    Linha
+    = InputWords "|" Sentenca "\n"                          (. handler.clearBuffers(); .)
+    .
 
     InputWords                                              (. String input = ""; .)
     = Word<out input>                                       (. handler.addInputWord(input); .)
@@ -75,7 +86,7 @@ PRODUCTIONS
     = Word<out input>                                       (. handler.add(input); .)
         { 
             (
-                Word<out input> (. handler.add(input); .)
+                Word<out input>                             (. handler.add(input); .)
             | 
                 PlaceHolder<out number>                     (. handler.handlePlaceHolder(number); .)
             ) 

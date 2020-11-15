@@ -7,16 +7,22 @@ class ChangeWords {
     ArrayList<String> inputWords;
     ArrayList<String> placeHolders;
     String line;
-    String finalResult;
+    String outputString;
 
     public ChangeWords() {
         this.line = "";
+        this.outputString = "";
         this.inputWords = new ArrayList();
         this.placeHolders = new ArrayList();
     }
 
+    public void clearBuffers() {
+        this.inputWords.clear();
+        this.placeHolders.clear();
+    }
+
     public void add(String text) {
-        this.line += text;
+        this.line += text + " ";
     }
 
     public void addInputWord(String input) {
@@ -28,7 +34,10 @@ class ChangeWords {
     }
 
     public void handlePlaceHolder(String digits) {
-        this.placeHolders.add(digits);
+        int readedIndex = Integer.parseInt(digits);
+        String searchedPlaceHolder = this.inputWords.get(readedIndex-1);        
+        this.line+= searchedPlaceHolder + " ";
+        //this.placeHolders.add(digits);
     }
 
     public void showPlaceHolders() {
@@ -128,7 +137,7 @@ public class Parser {
 		while (la.kind == 1) {
 			Linha();
 		}
-		handler.showInputWords(); handler.showPlaceHolders(); 
+		handler.show(); 
 	}
 
 	void Linha() {
@@ -136,6 +145,7 @@ public class Parser {
 		Expect(3);
 		Sentenca();
 		Expect(4);
+		handler.clearBuffers(); 
 	}
 
 	void InputWords() {
