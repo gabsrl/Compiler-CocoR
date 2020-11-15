@@ -5,12 +5,18 @@ import java.util.ArrayList;
 
 class ChangeWords {
     ArrayList<String> inputWords;
+    ArrayList<String> placeHolders;
     String line;
     String finalResult;
 
     public ChangeWords() {
         this.line = "";
         this.inputWords = new ArrayList();
+        this.placeHolders = new ArrayList();
+    }
+
+    public void add(String text) {
+        this.line += text;
     }
 
     public void addInputWord(String input) {
@@ -21,10 +27,13 @@ class ChangeWords {
         System.out.println(this.inputWords);
     }
 
-
-    public void add(String text) {
-        this.line += text;
+    public void handlePlaceHolder(String digits) {
+        this.placeHolders.add(digits);
     }
+
+    public void showPlaceHolders() {
+        System.out.println(this.placeHolders);
+    }    
 
     public void show() {
         System.out.println(this.line);
@@ -119,7 +128,7 @@ public class Parser {
 		while (la.kind == 1) {
 			Linha();
 		}
-		handler.showInputWords(); 
+		handler.showInputWords(); handler.showPlaceHolders(); 
 	}
 
 	void Linha() {
@@ -141,7 +150,7 @@ public class Parser {
 	}
 
 	void Sentenca() {
-		String input = ""; 
+		String input = ""; String number=""; 
 		input = Word();
 		handler.add(input); 
 		while (la.kind == 1 || la.kind == 2) {
@@ -149,7 +158,8 @@ public class Parser {
 				input = Word();
 				handler.add(input); 
 			} else {
-				Get();
+				number = PlaceHolder();
+				handler.handlePlaceHolder(number); 
 			}
 		}
 	}
@@ -159,6 +169,13 @@ public class Parser {
 		Expect(1);
 		s = t.val; 
 		return s;
+	}
+
+	String  PlaceHolder() {
+		String  digits;
+		Expect(2);
+		digits = t.val; 
+		return digits;
 	}
 
 

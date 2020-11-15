@@ -3,12 +3,18 @@ import java.util.ArrayList;
 
 class ChangeWords {
     ArrayList<String> inputWords;
+    ArrayList<String> placeHolders;
     String line;
     String finalResult;
 
     public ChangeWords() {
         this.line = "";
         this.inputWords = new ArrayList();
+        this.placeHolders = new ArrayList();
+    }
+
+    public void add(String text) {
+        this.line += text;
     }
 
     public void addInputWord(String input) {
@@ -19,10 +25,13 @@ class ChangeWords {
         System.out.println(this.inputWords);
     }
 
-
-    public void add(String text) {
-        this.line += text;
+    public void handlePlaceHolder(String digits) {
+        this.placeHolders.add(digits);
     }
+
+    public void showPlaceHolders() {
+        System.out.println(this.placeHolders);
+    }    
 
     public void show() {
         System.out.println(this.line);
@@ -50,7 +59,7 @@ PRODUCTIONS
     = Linha
         {
             Linha 
-        }                                                   (. handler.showInputWords(); .)               
+        }                                                   (. handler.showInputWords(); handler.showPlaceHolders(); .)               
     .
 
     Linha = InputWords "|" Sentenca "\n".
@@ -62,19 +71,23 @@ PRODUCTIONS
         }                                                   (. handler.addInputWord(input); .)
     .
 
-    Sentenca                                                (. String input = ""; .)
+    Sentenca                                                (. String input = ""; String number=""; .)
     = Word<out input>                                       (. handler.add(input); .)
         { 
             (
                 Word<out input> (. handler.add(input); .)
             | 
-                placeHolderWord
+                PlaceHolder<out number>                     (. handler.handlePlaceHolder(number); .)
             ) 
         }
     .
 
     Word<out String s>
     = palavra                                               (. s = t.val; .)
+    .
+
+    PlaceHolder<out String digits>
+    = placeHolderWord                                       (. digits = t.val; .)
     .
 
 END QuaseSemQuerer.
