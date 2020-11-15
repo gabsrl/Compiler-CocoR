@@ -2,9 +2,11 @@ COMPILER QuaseSemQuerer
 
 CHARACTERS
     letra = 'A'..'Z' + 'a'..'z'.
+    digito = "0123456789".
 
 TOKENS
     palavra = letra { letra }.
+    placeHolderWord = "{" digito { digito } "}".
 
 IGNORE '\t' + '\r'
 
@@ -12,7 +14,7 @@ PRODUCTIONS
     QuaseSemQuerer = Linha { Linha }.
     Linha = InputWords "|" Sentenca "\n".
     InputWords = palavra { "," palavra }.
-    Sentenca = palavra { palavra }.
+    Sentenca = palavra { (palavra | placeHolderWord) }.
 
 END QuaseSemQuerer.
 
@@ -20,3 +22,17 @@ END QuaseSemQuerer.
 palavras, ditas | sei que as vezes uso {1} repetidas mas que {1} nunca sao {2}
 longe, muito | ele vive {1} {2} {2} {2} {1}
  */
+
+ /**
+    Sentenças são senquencias de plavras e placeholders
+    em QUALQUER ORDEM.
+
+  */
+
+
+  /**
+  palavras, ditas | sei que as vezes uso repetidas mas que nunca sao
+longe, muito | ele vive longe muito muito muito longe
+
+  
+   */

@@ -250,8 +250,8 @@ class StartStates {
 public class Scanner {
 	static final char EOL = '\n';
 	static final int  eofSym = 0;
-	static final int maxT = 5;
-	static final int noSym = 5;
+	static final int maxT = 6;
+	static final int noSym = 6;
 
 
 	public Buffer buffer; // scanner buffer
@@ -278,9 +278,10 @@ public class Scanner {
 		literals = new HashMap();
 		for (int i = 65; i <= 90; ++i) start.set(i, 1);
 		for (int i = 97; i <= 122; ++i) start.set(i, 1);
-		start.set(124, 2); 
-		start.set(10, 3); 
-		start.set(44, 4); 
+		start.set(123, 2); 
+		start.set(124, 5); 
+		start.set(10, 6); 
+		start.set(44, 7); 
 		start.set(Buffer.EOF, -1);
 
 	}
@@ -377,11 +378,20 @@ public class Scanner {
 					if (ch >= 'A' && ch <= 'Z' || ch >= 'a' && ch <= 'z') {AddCh(); state = 1; break;}
 					else {t.kind = 1; break loop;}
 				case 2:
-					{t.kind = 2; break loop;}
+					if (ch >= '0' && ch <= '9') {AddCh(); state = 3; break;}
+					else {state = 0; break;}
 				case 3:
-					{t.kind = 3; break loop;}
+					if (ch >= '0' && ch <= '9') {AddCh(); state = 3; break;}
+					else if (ch == '}') {AddCh(); state = 4; break;}
+					else {state = 0; break;}
 				case 4:
+					{t.kind = 2; break loop;}
+				case 5:
+					{t.kind = 3; break loop;}
+				case 6:
 					{t.kind = 4; break loop;}
+				case 7:
+					{t.kind = 5; break loop;}
 
 			}
 		}

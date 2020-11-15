@@ -3,7 +3,8 @@
 public class Parser {
 	public static final int _EOF = 0;
 	public static final int _palavra = 1;
-	public static final int maxT = 5;
+	public static final int _placeHolderWord = 2;
+	public static final int maxT = 6;
 
 	static final boolean T = true;
 	static final boolean x = false;
@@ -85,14 +86,14 @@ public class Parser {
 
 	void Linha() {
 		InputWords();
-		Expect(2);
-		Sentenca();
 		Expect(3);
+		Sentenca();
+		Expect(4);
 	}
 
 	void InputWords() {
 		Expect(1);
-		while (la.kind == 4) {
+		while (la.kind == 5) {
 			Get();
 			Expect(1);
 		}
@@ -100,8 +101,12 @@ public class Parser {
 
 	void Sentenca() {
 		Expect(1);
-		while (la.kind == 1) {
-			Get();
+		while (la.kind == 1 || la.kind == 2) {
+			if (la.kind == 1) {
+				Get();
+			} else {
+				Get();
+			}
 		}
 	}
 
@@ -117,7 +122,7 @@ public class Parser {
 	}
 
 	private static final boolean[][] set = {
-		{T,x,x,x, x,x,x}
+		{T,x,x,x, x,x,x,x}
 
 	};
 } // end Parser
@@ -144,10 +149,11 @@ class Errors {
 		switch (n) {
 			case 0: s = "EOF expected"; break;
 			case 1: s = "palavra expected"; break;
-			case 2: s = "\"|\" expected"; break;
-			case 3: s = "\"\\n\" expected"; break;
-			case 4: s = "\",\" expected"; break;
-			case 5: s = "??? expected"; break;
+			case 2: s = "placeHolderWord expected"; break;
+			case 3: s = "\"|\" expected"; break;
+			case 4: s = "\"\\n\" expected"; break;
+			case 5: s = "\",\" expected"; break;
+			case 6: s = "??? expected"; break;
 			default: s = "error " + n; break;
 		}
 		printMsg(line, col, s);
