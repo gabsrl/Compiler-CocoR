@@ -17,6 +17,7 @@ class ChangeWords {
     }
 
     public void clearBuffers() {
+        this.line += "\n";
         this.inputWords.clear();
         this.placeHolders.clear();
     }
@@ -37,7 +38,6 @@ class ChangeWords {
         int readedIndex = Integer.parseInt(digits);
         String searchedPlaceHolder = this.inputWords.get(readedIndex-1);        
         this.line+= searchedPlaceHolder + " ";
-        //this.placeHolders.add(digits);
     }
 
     public void showPlaceHolders() {

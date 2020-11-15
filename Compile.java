@@ -7,7 +7,7 @@ public class Compile
 		Scanner s = new Scanner(argv[0]);
 		Parser p = new Parser(s);
 		p.Parse();
-		System.out.println("Numero de erros: " + p.errors.count);
+		//System.out.println("Numero de erros: " + p.errors.count);
 	}
 }
 

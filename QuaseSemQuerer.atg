@@ -1,6 +1,13 @@
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * @Author: Gabriel Rocha de Lima (grl@icomp.ufam.edu.br)
+ * Exercício de Compiladores lecionado por Marco Cristo (Icomp/UFAM)
+ * Icomp/UFAM - AM - Brasil
+ * Sun Nov, 15, 2020
+ */
+
 class ChangeWords {
     ArrayList<String> inputWords;
     ArrayList<String> placeHolders;
@@ -15,6 +22,7 @@ class ChangeWords {
     }
 
     public void clearBuffers() {
+        this.line += "\n";
         this.inputWords.clear();
         this.placeHolders.clear();
     }
@@ -35,7 +43,6 @@ class ChangeWords {
         int readedIndex = Integer.parseInt(digits);
         String searchedPlaceHolder = this.inputWords.get(readedIndex-1);        
         this.line+= searchedPlaceHolder + " ";
-        //this.placeHolders.add(digits);
     }
 
     public void showPlaceHolders() {
@@ -104,20 +111,14 @@ PRODUCTIONS
 END QuaseSemQuerer.
 
 /**
+---- Exemplo de entrada:
 palavras, ditas | sei que as vezes uso {1} repetidas mas que {1} nunca sao {2}
 longe, muito | ele vive {1} {2} {2} {2} {1}
- */
+
+*/
 
  /**
     Sentenças são senquencias de plavras e placeholders
     em QUALQUER ORDEM.
 
   */
-
-
-  /**
-  palavras, ditas | sei que as vezes uso repetidas mas que nunca sao
-longe, muito | ele vive longe muito muito muito longe
-
-  
-   */
