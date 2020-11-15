@@ -174,7 +174,7 @@ public class Parser {
 	String  PlaceHolder() {
 		String  digits;
 		Expect(2);
-		digits = t.val; 
+		digits = t.val.substring(1, t.val.length() - 1); 
 		return digits;
 	}
 

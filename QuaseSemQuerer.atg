@@ -87,7 +87,7 @@ PRODUCTIONS
     .
 
     PlaceHolder<out String digits>
-    = placeHolderWord                                       (. digits = t.val; .)
+    = placeHolderWord                                       (. digits = t.val.substring(1, t.val.length() - 1); .)
     .
 
 END QuaseSemQuerer.
