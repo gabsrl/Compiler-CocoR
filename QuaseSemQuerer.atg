@@ -1,9 +1,27 @@
 import java.io.*;
+import java.util.ArrayList;
 
 class ChangeWords {
+    ArrayList<String> inputWords;
     String line;
+    String finalResult;
+
     public ChangeWords() {
-        this.line = "vazia";
+        this.line = "";
+        this.inputWords = new ArrayList();
+    }
+
+    public void addInputWord(String input) {
+        this.inputWords.add(input);
+    }
+
+    public void showInputWords() {
+        System.out.println(this.inputWords);
+    }
+
+
+    public void add(String text) {
+        this.line += text;
     }
 
     public void show() {
@@ -32,19 +50,32 @@ PRODUCTIONS
     = Linha
         {
             Linha 
-        }                                                   (. handler.show(); .)               
+        }                                                   (. handler.showInputWords(); .)               
     .
 
     Linha = InputWords "|" Sentenca "\n".
 
-    InputWords
-    = palavra 
+    InputWords                                              (. String input = ""; .)
+    = Word<out input>                                       (. handler.addInputWord(input); .)
         {
-            "," palavra
+            "," Word<out input>
+        }                                                   (. handler.addInputWord(input); .)
+    .
+
+    Sentenca                                                (. String input = ""; .)
+    = Word<out input>                                       (. handler.add(input); .)
+        { 
+            (
+                Word<out input> (. handler.add(input); .)
+            | 
+                placeHolderWord
+            ) 
         }
     .
 
-    Sentenca = palavra { (palavra | placeHolderWord) }.
+    Word<out String s>
+    = palavra                                               (. s = t.val; .)
+    .
 
 END QuaseSemQuerer.
 

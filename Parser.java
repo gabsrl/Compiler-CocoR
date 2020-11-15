@@ -1,11 +1,29 @@
 
 
 import java.io.*;
+import java.util.ArrayList;
 
 class ChangeWords {
+    ArrayList<String> inputWords;
     String line;
+    String finalResult;
+
     public ChangeWords() {
-        this.line = "vazia";
+        this.line = "";
+        this.inputWords = new ArrayList();
+    }
+
+    public void addInputWord(String input) {
+        this.inputWords.add(input);
+    }
+
+    public void showInputWords() {
+        System.out.println(this.inputWords);
+    }
+
+
+    public void add(String text) {
+        this.line += text;
     }
 
     public void show() {
@@ -101,7 +119,7 @@ public class Parser {
 		while (la.kind == 1) {
 			Linha();
 		}
-		handler.show(); 
+		handler.showInputWords(); 
 	}
 
 	void Linha() {
@@ -112,22 +130,35 @@ public class Parser {
 	}
 
 	void InputWords() {
-		Expect(1);
+		String input = ""; 
+		input = Word();
+		handler.addInputWord(input); 
 		while (la.kind == 5) {
 			Get();
-			Expect(1);
+			input = Word();
 		}
+		handler.addInputWord(input); 
 	}
 
 	void Sentenca() {
-		Expect(1);
+		String input = ""; 
+		input = Word();
+		handler.add(input); 
 		while (la.kind == 1 || la.kind == 2) {
 			if (la.kind == 1) {
-				Get();
+				input = Word();
+				handler.add(input); 
 			} else {
 				Get();
 			}
 		}
+	}
+
+	String  Word() {
+		String  s;
+		Expect(1);
+		s = t.val; 
+		return s;
 	}
 
 
