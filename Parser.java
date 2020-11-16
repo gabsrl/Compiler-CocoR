@@ -3,6 +3,13 @@
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * @Author: Gabriel Rocha de Lima (grl@icomp.ufam.edu.br)
+ * ExercÃ­cio de Compiladores lecionado por Marco Cristo (Icomp/UFAM)
+ * Icomp/UFAM - AM - Brasil
+ * Sun Nov, 15, 2020
+ */
+
 class ChangeWords {
     ArrayList<String> inputWords;
     ArrayList<String> placeHolders;
